@@ -62,3 +62,62 @@ plt.figure(figsize=(8,6))
 sns.heatmap(iris_df.corr(),annot=True,cmap='coolwarm',fmt='.2f',linewidths=1,linecolor='white')
 plt.title('Correlation Heatmap of Iris Features')
 plt.show()
+
+# Separate features (X) and target (y) from the DataFrame 
+X = iris_df.drop('target', axis=1)  
+y = iris_df['target']
+
+# Import the train_test_split function from sklearn.model_selection
+from sklearn.model_selection import train_test_split 
+
+# Split the dataset into training and testing sets 
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+from sklearn.preprocessing import StandardScaler
+
+# Standardize features by removing the mean and scaling to unit 
+scaler = StandardScaler() 
+X_train = scaler.fit_transform(X_train) 
+X_test = scaler.transform(X_test) 
+
+# Import LogisticRegression
+from sklearn.linear_model import LogisticRegression
+
+# Initialize the Logistic Regression model 
+model = LogisticRegression() 
+
+# Train the model on the training data 
+model.fit(X_train, y_train) 
+
+# Predict on the test data 
+y_pred = model.predict(X_test) 
+
+# Import accuracy_score
+from sklearn.metrics import accuracy_score
+
+# Calculate training and testing accuracy 
+train_accuracy = accuracy_score(y_train, model.predict(X_train)) 
+test_accuracy = accuracy_score(y_test, y_pred) 
+
+print("Training Accuracy:", train_accuracy) 
+print("Testing Accuracy:", test_accuracy)
+
+# Import the confusion_matrix function from sklearn.metrics
+from sklearn.metrics import confusion_matrix
+
+# Create a confusion matrix 
+conf_matrix = confusion_matrix(y_test, y_pred) 
+print("\nConfusion Matrix:") 
+print(conf_matrix)
+
+from sklearn.metrics import classification_report
+# Print classification report 
+print("\nClassification Report:") 
+print(classification_report(y_test, y_pred, target_names=iris.target_names)) 
+
+from sklearn.metrics import roc_curve, auc
+# Print probabilities of classification for the first few samples in the test set 
+print("\nProbabilities of Classification:") 
+probabilities = model.predict_proba(X_test[:5]) 
+for i, prob in enumerate(probabilities):
+  print(f"Sample {i+1}: {list(zip(iris.target_names, prob))}") 	
+
