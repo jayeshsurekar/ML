@@ -56,3 +56,9 @@ plt.xlabel('target')
 plt.ylabel('Count')
 plt.xticks(ticks=[0,1,2],labels=iris.target_names)
 plt.show()
+
+#Correlation Heatmap
+plt.figure(figsize=(8,6))
+sns.heatmap(iris_df.corr(),annot=True,cmap='coolwarm',fmt='.2f',linewidths=1,linecolor='white')
+plt.title('Correlation Heatmap of Iris Features')
+plt.show()
