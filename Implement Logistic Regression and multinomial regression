@@ -8,32 +8,40 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
 
+
 #load the iris dataset from sklearn
 iris = datasets.load_iris()
+
 
 #Convert the data into a DataFrame
 iris_df = pd.DataFrame(iris.data, columns=iris.feature_names)
 iris_df['target']= iris.target
 iris_df.shape
 
+
 iris_df.info()
 
+
 iris_df.describe()
+
 
 #EDA: Pairplot to visualize relationship between features
 sns.pairplot(iris_df, hue='target', palette='viridis', diag_kind='hist')
 plt.suptitle("Pairplot of Iris Dataset", y=1.02)
 plt.show()
 
+
 import matplotlib.pyplot as plt
 import seaborn as sns
 from sklearn.datasets import load_iris 
 import pandas as pd 
 
+
 # Load the iris dataset
 iris = load_iris()
 iris_df = pd.DataFrame(data=iris.data, columns=iris.feature_names) # Create a DataFrame from the iris dataset
 iris_df['target'] = iris.target # Add the target variable to the DataFrame
+
 
 #Boxplot
 plt.figure(figsize=(12,6))
@@ -41,12 +49,14 @@ plt.subplot(1,2,1)
 sns.boxplot(x='target',y='sepal length (cm)',data=iris_df) # Make sure column name matches
 plt.title('Boxplot of sepal length by Target')
 
+
 #Violin Plot
 plt.subplot(1,2,2)
 sns.violinplot(x='target',y='sepal width (cm)',data=iris_df) # Changed column name to 'sepal width (cm)'
 plt.title('Violin Plot of Sepal Width by Target')
 plt.tight_layout()
 plt.show()
+
 
 #Count Plot(Bar PLot)
 plt.figure(figsize=(8,5))
@@ -57,27 +67,33 @@ plt.ylabel('Count')
 plt.xticks(ticks=[0,1,2],labels=iris.target_names)
 plt.show()
 
+
 #Correlation Heatmap
 plt.figure(figsize=(8,6))
 sns.heatmap(iris_df.corr(),annot=True,cmap='coolwarm',fmt='.2f',linewidths=1,linecolor='white')
 plt.title('Correlation Heatmap of Iris Features')
 plt.show()
 
+
 # Separate features (X) and target (y) from the DataFrame 
 X = iris_df.drop('target', axis=1)  
 y = iris_df['target']
 
+
 # Import the train_test_split function from sklearn.model_selection
 from sklearn.model_selection import train_test_split 
+
 
 # Split the dataset into training and testing sets 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 from sklearn.preprocessing import StandardScaler
 
+
 # Standardize features by removing the mean and scaling to unit 
 scaler = StandardScaler() 
 X_train = scaler.fit_transform(X_train) 
 X_test = scaler.transform(X_test) 
+
 
 # Import LogisticRegression
 from sklearn.linear_model import LogisticRegression
@@ -103,6 +119,7 @@ print("Testing Accuracy:", test_accuracy)
 
 # Import the confusion_matrix function from sklearn.metrics
 from sklearn.metrics import confusion_matrix
+
 
 # Create a confusion matrix 
 conf_matrix = confusion_matrix(y_test, y_pred) 
